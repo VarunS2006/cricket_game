@@ -3,30 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cricket Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1 class="title">Cricket Game</h1>
-    <div class="comp-target">
-        <h1>Target:  </h1>
-        <h1 id="target">0</h1>
-    </div>
-    <div class="generate-target">
-        <button id="target-button">Generate Target</button>
-    </div>
-    <div class="player-scores">
-        <button class="score">1  </button>
-        <button class="score">2  </button>
-        <button class="score">3  </button>
-        <button class="score">4  </button>
-        <button class="score">5  </button>
-        <button class="score">6  </button>
-    </div>
-    <div class="currentscore">
-        <p>Score: </p>
-        <p id="updatescore">0</p>
-    </div>
+    <main>
+        <h1 class="title">Cricket Game</h1>
+
+        <div class="comp-target" role="region" aria-labelledby="target-label">
+            <p id="target-label">Target:</p>
+            <p id="target" aria-live="polite">0</p>
+        </div>
+
+        <div class="generate-target">
+            <button id="target-button" aria-label="Generate target">Generate Target</button>
+        </div>
+
+        <div class="player-scores" role="group" aria-label="Score Buttons">
+            <button class="score" aria-label="Hit 1 run">1</button>
+            <button class="score" aria-label="Hit 2 runs">2</button>
+            <button class="score" aria-label="Hit 3 runs">3</button>
+            <button class="score" aria-label="Hit 4 runs">4</button>
+            <button class="score" aria-label="Hit 5 runs">5</button>
+            <button class="score" aria-label="Hit 6 runs">6</button>
+        </div>
+
+        <div class="currentscore" role="region" aria-labelledby="score-label">
+            <p id="score-label">Score:</p>
+            <p id="updatescore" aria-live="polite">0</p>
+        </div>
+
+        <div class="restart-button">
+            <button id="restart" aria-label="Restart game">Restart Game</button>
+        </div>
+    </main>
+
     <script src="cricket.js"></script>
 </body>
 </html>
