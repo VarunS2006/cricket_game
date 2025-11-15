@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CORSIT Robotics Club</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ---------------------------------------------------
+   GLOBAL THEME VARIABLES
+-----------------------------------------------------*/
+:root {
+  --neon-red: #ff2b3a;
+  --neon-purple: #8b3cff;
+  --glass: rgba(255,255,255,0.05);
+  --glass-2: rgba(255,255,255,0.02);
+  --accent: linear-gradient(90deg, var(--neon-purple), var(--neon-red));
+  --text-light: #dfe6ff;
+  --text-dim: #9aa3c2;
+  --bg: #000;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text-light);
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------
+   BACKGROUND ANIMATED LAYERS
+-----------------------------------------------------*/
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(600px 200px at 10% 10%, rgba(139,60,255,0.08), transparent 15%),
+    radial-gradient(500px 200px at 90% 90%, rgba(255,43,58,0.08), transparent 12%),
+    linear-gradient(180deg, #020204, #0a0a12);
+  animation: floatBg 14s linear infinite alternate;
+  filter: blur(40px);
+}
+@keyframes floatBg {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-40px);}
+}
+
+/* ---------------------------------------------------
+   CIRCUIT BACKGROUND SVG
+-----------------------------------------------------*/
+.circuit {
+  position: fixed; inset: 0; z-index: -2;
+  opacity: 0.14; pointer-events: none;
+  animation: circuitMove 20s linear infinite;
+}
+@keyframes circuitMove {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-70px); }
+}
+
+/* ---------------------------------------------------
+   NAVBAR
+-----------------------------------------------------*/
+nav {
+  position: fixed;
+  top: 20px; 
+  left: 50%; transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+nav .brand img {
+  width: 58px;
+  height: 58px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+nav .brand h1 {
+  font-family: 'Orbitron';
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: 1px;
+}
+nav ul {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+}
+nav ul li a:hover {
+  color: var(--neon-red);
+  transform: translateY(-3px);
+}
+nav .cta {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 43, 58, 0.3);
+}
+
+/* ---------------------------------------------------
+   HERO SECTION
+-----------------------------------------------------*/
+.hero {
+  min-height: 100vh;
+  padding-top: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-inner {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 40px;
+  padding: 20px;
+}
+.hero-logo-container {
+  width: 360px;
+  height: 360px;
+  margin: auto;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: floatLogo 6s ease-in-out infinite;
+}
+@keyframes floatLogo {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+.hero-logo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.hero-text h2 {
+  font-family: 'Orbitron';
+  font-size: 42px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.hero-text p {
+  font-size: 17px;
+  opacity: 0.85;
+}
+.btn-row {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+}
+.btn {
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: transparent;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+}
+.btn.primary {
+  background: var(--accent);
+  border: none;
+}
+
+/* ---------------------------------------------------
+   TEAM SECTION
+-----------------------------------------------------*/
+section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 90px 20px;
+}
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.section-title h2 {
+  font-family: 'Orbitron';
+  font-size: 34px;
+  color: var(--neon-red);
+  text-shadow: 0 0 16px rgba(255,43,58,0.2);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 24px;
+}
+.team-card {
+  background: var(--glass);
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  text-align: center;
+  transition: 0.35s;
+}
+.team-card:hover {
+  transform: translateY(-10px) scale(1.03);
+}
+.team-card img {
+  width: 100%;
+  height: 240px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.team-card h3 {
+  margin-top: 12px;
+  font-size: 20px;
+}
+
+/* ---------------------------------------------------
+   EVENTS TIMELINE
+-----------------------------------------------------*/
+.timeline {
+  position: relative;
+  margin-top: 30px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  background: var(--neon-purple);
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px var(--neon-purple);
+}
+.event {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 0;
+}
+.event-content {
+  width: 44%;
+  padding: 18px;
+  border-radius: 12px;
+  background: var(--glass-2);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.event:nth-child(odd) .event-content {
+  margin-left: auto;
+}
+.event:nth-child(even) .event-content {
+  margin-right: auto;
+}
+.event .dot {
+  width: 22px;
+  height: 22px;
+  background: var(--neon-red);
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px var(--neon-red);
+}
+
+/* ---------------------------------------------------
+   GALLERY
+-----------------------------------------------------*/
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.gallery-grid img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.gallery-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* Pop-up viewer */
+#popupViewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+#popupViewer img {
+  width: 70%;
+  max-width: 800px;
+  border-radius: 12px;
+}
+
+/* ---------------------------------------------------
+   QUIZ SECTION
+-----------------------------------------------------*/
+.quiz-box {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--glass);
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.quiz-question {
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+.quiz-option {
+  padding: 12px;
+  background: var(--glass-2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.quiz-option:hover {
+  background: rgba(255,255,255,0.08);
+}
+.correct { background: rgba(30, 255, 110, 0.2)!important; border-color: #3aff8c!important; }
+.wrong { background: rgba(255, 50, 40, 0.2)!important; border-color: #ff4444!important; }
+#quiz-result {
+  margin-top: 16px;
+  font-size: 22px;
+  text-align: center;
+  color: #85ff98;
+}
+
+/* ---------------------------------------------------
+   CONTACT / FOOTER
+-----------------------------------------------------*/
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  opacity: 0.85;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+footer img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* ---------------------------------------------------
+   SCROLL REVEAL
+-----------------------------------------------------*/
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 1s;
+}
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<!-- CIRCUIT BACKGROUND -->
+<svg class="circuit" viewBox="0 0 1400 700">
+  <path d="M30 130 C120 80 240 220 320 170 L520 80 L720 180 L920 120 L1180 220" stroke="#8b3cff" stroke-width="2" fill="none"/>
+  <path d="M40 350 C200 330 300 480 460 410 L640 340 L840 410 L1040 360 L1280 420" stroke="#ff2b3a" stroke-width="2" fill="none"/>
+</svg>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="brand">
+    <img src="corsitlogo.jpg" alt="logo">
+    <div>
+      <h1>CORSIT</h1>
+      <span>Robotics Club</span>
+    </div>
+  </div>
+
+  <ul class="menu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <button class="cta" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">
+    Take Quiz
+  </button>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+
+    <div class="hero-logo-container reveal">
+      <img src="corsitlogo.jpg" alt="CORSIT Logo">
+    </div>
+
+    <div class="hero-text">
+      <h2 class="reveal">CORSIT — Robotics & AI Innovation</h2>
+      <p class="reveal">
+        We build autonomous robots, drones, AI-driven systems, and participate in national-level tech competitions.
+      </p>
+
+      <div class="btn-row reveal">
+        <button class="btn primary" onclick="document.getElementById('team').scrollIntoView({behavior:'smooth'})">Meet the Team</button>
+        <button class="btn" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">View Gallery</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TEAM MEMBERS -->
+<section id="team">
+  <div class="section-title">
+    <h2 class="reveal">Team Members</h2>
+    <p class="reveal">Our current club leads (temporary placeholders).</p>
+  </div>
+
+  <div class="team-grid reveal">
+
+    <div class="team-card">
+      <img src="vk.jpg" alt="Virat Kohli">
+      <h3>Virat Kohli</h3>
+      <p>Team Lead</p>
+    </div>
+
+    <div class="team-card">
+      <img src="msdhoni.webp" alt="MS Dhoni">
+      <h3>MS Dhoni</h3>
+      <p>Technical Head</p>
+    </div>
+
+    <div class="team-card">
+      <img src="rohit.avif" alt="Rohit Sharma">
+      <h3>Rohit Sharma</h3>
+      <p>AI Specialist</p>
+    </div>
+
+    <div class="team-card">
+      <img src="klr.jpg" alt="KL Rahul">
+      <h3>KL Rahul</h3>
+      <p>Embedded Systems</p>
+    </div>
+
+    <div class="team-card">
+      <img src="bumrah.jpg" alt="Jasprit Bumrah">
+      <h3>Jasprit Bumrah</h3>
+      <p>Hardware Engineer</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- EVENTS TIMELINE -->
+<section id="events">
+  <div class="section-title">
+    <h2 class="reveal">Events & Achievements</h2>
+  </div>
+
+  <div class="timeline reveal">
+
+    <div class="event">
+      <div class="dot"></div>
+      <div class="event-content">
+        <h3>2024 — Robotics Hackathon</h3>
+        <p>Secured 1st place in the Autonomous Rover Challenge.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="dot"></div>
+      <div class="event-content">
+        <h3>2023 — Drone Tech Expo</h3>
+        <p>Showcased our Drone Swarm AI Synchronization Project.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="dot"></div>
+      <div class="event-content">
+        <h3>2022 — RoboRace Championship</h3>
+        <p>Top 5 finish among 120+ competing college teams.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-title">
+    <h2 class="reveal">Robotics Gallery</h2>
+  </div>
+
+  <div class="gallery-grid reveal">
+    <img src="r1.jpg" alt="">
+    <img src="r2.webp" alt="">
+    <img src="r3.jpg" alt="">
+    <img src="r4.webp" alt="">
+    <img src="r5.avif" alt="">
+    <img src="r6.png" alt="">
+    <img src="r7.webp" alt="">
+    <img src="r8.webp" alt="">
+    <img src="r9.webp" alt="">
+  </div>
+</section>
+
+<!-- IMAGE VIEWER -->
+<div id="popupViewer" onclick="this.style.display='none'">
+  <img src="" id="popupImage">
+</div>
+
+<!-- QUIZ SECTION -->
+<section id="quiz">
+  <div class="section-title">
+    <h2 class="reveal">Robotics Quiz</h2>
+  </div>
+
+  <div class="quiz-box reveal">
+    <div id="quiz-container"></div>
+    <div id="quiz-result"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-title">
+    <h2 class="reveal">Contact Us</h2>
+    <p>Email: <strong>corsitclub@gmail.com</strong></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="corsitlogo.jpg" alt="logo">
+  <p>© 2025 CORSIT Robotics Club — All Rights Reserved</p>
+</footer>
+
+<script>
+/* SCROLL REVEAL */
+const reveals=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver((entries)=>{
+entries.forEach(e=>{
+if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+});
+},{threshold:0.15});
+reveals.forEach(r=>io.observe(r));
+
+/* GALLERY POPUP */
+document.querySelectorAll('.gallery-grid img').forEach(img=>{
+img.addEventListener('click',()=>{
+document.getElementById('popupViewer').style.display='flex';
+document.getElementById('popupImage').src=img.src;
+});
+});
+
+/* QUIZ LOGIC */
+const quizData=[
+{
+q:"1) What does a LiDAR sensor do?",
+o:["Measures distance using light","Generates heat","Acts as a CPU","Stores memory"],
+a:0
+},
+{
+q:"2) Which microcontroller is widely used in robotics?",
+o:["GPU","Arduino","SSD","Monitor"],
+a:1
+},
+{
+q:"3) What does SLAM stand for?",
+o:["Simultaneous Localization And Mapping","Smart Light Auto Mode","Servo Linear Actuator Motor","Signal Level Amplifier Module"],
+a:0
+},
+{
+q:"4) Which motor is best for precise angle control?",
+o:["DC Motor","Stepper Motor","Induction Motor","Fan Motor"],
+a:1
+},
+{
+q:"5) What is the brain of a robot?",
+o:["Wheels","Sensors","Controller","Chassis"],
+a:2
+}
+];
+
+let current=0, score=0;
+
+function loadQuiz(){
+const q=quizData[current];
+let html=`<div class='quiz-question'>${q.q}</div>`;
+q.o.forEach((opt,i)=>{
+html+=`<div class='quiz-option' onclick='checkAnswer(${i})'>${opt}</div>`;
+});
+document.getElementById('quiz-container').innerHTML=html;
+}
+loadQuiz();
+
+function checkAnswer(i){
+const q=quizData[current];
+const options=document.querySelectorAll('.quiz-option');
+
+options.forEach(opt=>opt.style.pointerEvents='none');
+
+if(i===q.a){
+options[i].classList.add('correct');
+score++;
+}else{
+options[i].classList.add('wrong');
+options[q.a].classList.add('correct');
+}
+
+setTimeout(()=>{
+current++;
+if(current<quizData.length) loadQuiz();
+else document.getElementById('quiz-result').innerHTML=`Your Score: <strong>${score}/${quizData.length}</strong>`;
+},900);
+}
+</script>
+
+</body>
+</html>
